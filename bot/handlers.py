@@ -123,11 +123,13 @@ async def cmd_status(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None
         uptime_str=_uptime(),
         last_signal=last_sig_str,
     )
-    target = update.message or update.callback_query.message
+    target = update.message if update.message else (update.callback_query.message if update.callback_query else None)
     if update.callback_query:
         await update.callback_query.answer()
         await _safe_edit(update.callback_query, text, reply_markup=back_to_menu())
     else:
+        if target is None:
+            return
         await target.reply_text(text, reply_markup=back_to_menu(), parse_mode="HTML")
 
 

@@ -341,33 +341,14 @@ async def recover_unresolved() -> None:
                     replace_existing=True,
                 )
 
-    # Also re-queue any slots that were in the persistent retry queue before restart
+    # Pending queue items are left for the 5-minute reconciler (_reconcile_pending),
+    # which fires automatically after startup — no need to re-schedule them here.
     pending = await pending_queue.list_pending()
     if pending:
-        log.info("Recovering %d slot(s) from persistent retry queue...", len(pending))
-        for item in pending:
-            # Schedule immediate retry for each
-            resolve_time = datetime.now(timezone.utc) + timedelta(seconds=10)
-            if SCHEDULER is not None:
-                SCHEDULER.add_job(
-                    _resolve_and_notify,
-                    trigger="date",
-                    run_date=resolve_time,
-                    kwargs={
-                        "signal_id": item["signal_id"],
-                        "slug": item["slug"],
-                        "side": item["side"],
-                        "entry_price": item["entry_price"],
-                        "slot_start": item["slot_start"],
-                        "slot_end": item["slot_end"],
-                        "trade_id": item.get("trade_id"),
-                        "amount_usdc": item.get("amount_usdc"),
-                    },
-                    id=f"recover_pending_{item['signal_id']}",
-                    replace_existing=True,
-                )
-            # Remove from persistent queue — _resolve_and_notify will re-add if still fails
-            await pending_queue.remove_pending(item["signal_id"])
+        log.info(
+            "%d slot(s) remain in persistent retry queue — reconciler will handle them.",
+            len(pending),
+        )
 
 
 def start_scheduler(tg_app, poly_client) -> AsyncIOScheduler:
