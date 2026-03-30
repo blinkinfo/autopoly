@@ -40,7 +40,7 @@ def format_skip(
         "\u250c\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\n"
         f"\u2502 \u23f0 Slot: {slot_start_str}-{slot_end_str} UTC\n"
         f"\u2502 \U0001f4c8 Up Ask: ${up_price:.2f}  |  \U0001f4c9 Down Ask: ${down_price:.2f}\n"
-        "\u2502 Neither side \u2265 $0.53 \u2014 skipping\n"
+        "\u2502 Neither side \u2265 $0.51 \u2014 skipping\n"
         "\u2514\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500"
     )
 
@@ -201,6 +201,6 @@ def format_help() -> str:
         "<b>How it works:</b>\n"
         "Every 5 minutes the bot checks the NEXT slot's BTC up/down "
         "prices 85 seconds before the current slot ends. If either "
-        "side \u2265 $0.53, a signal fires and trades that slot. "
+        "side \u2265 $0.51, a signal fires and trades that slot. "
         "With AutoTrade ON, a FOK market order is placed automatically."
     )

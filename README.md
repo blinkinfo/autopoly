@@ -9,7 +9,7 @@ Automated Polymarket trading bot that monitors BTC 5-minute Up/Down markets, gen
 Every 5 minutes, Polymarket runs a BTC Up/Down market (will BTC price go up or down in the next 5 minutes). The bot:
 
 1. **Monitors** the NEXT slot's (N+1) Up/Down prices 85 seconds before the current slot ends (T-85s)
-2. **Signals** if either side in the N+1 market reaches >= $0.53 (indicating early market consensus)
+2. **Signals** if either side in the N+1 market reaches >= $0.51 (indicating early market consensus)
 3. **Trades** that same side in the N+1 slot (signal source and trade target are the same market)
 4. **Resolves** the outcome after the N+1 slot ends and tracks P&L
 
@@ -102,7 +102,7 @@ autopoly/
 |   |-- formatters.py # Message formatting (UTC timeslots)
 |   |-- middleware.py  # Chat ID auth guard
 |-- core/             # Trading engine
-|   |-- strategy.py   # Signal detection (N+1 prices at T-85s, $0.53 threshold)
+|   |-- strategy.py   # Signal detection (N+1 prices at T-85s, $0.51 threshold)
 |   |-- trader.py     # FOK order execution
 |   |-- resolver.py   # Outcome polling
 |   |-- scheduler.py  # APScheduler 5-min loop

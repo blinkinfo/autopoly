@@ -35,5 +35,5 @@ DB_PATH: str = os.getenv("DB_PATH", "autopoly.db")
 # ---------------------------------------------------------------------------
 # Strategy
 # ---------------------------------------------------------------------------
-SIGNAL_THRESHOLD: float = 0.53
+SIGNAL_THRESHOLD: float = 0.51
 SIGNAL_LEAD_TIME: int = 85  # seconds before slot end to check signal
